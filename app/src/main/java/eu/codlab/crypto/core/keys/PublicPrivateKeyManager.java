@@ -3,7 +3,6 @@ package eu.codlab.crypto.core.keys;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
-import eu.codlab.crypto.core.keys.logic.KeyUtil;
 import eu.codlab.crypto.core.stream.CypherRSA;
 
 /**

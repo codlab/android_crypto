@@ -5,7 +5,7 @@ import java.security.KeyPair;
 import de.greenrobot.event.EventBus;
 import eu.codlab.crypto.events.EventCreateKey;
 import eu.codlab.crypto.events.EventKeysGenerated;
-import eu.codlab.crypto.core.keys.logic.KeyUtil;
+import eu.codlab.crypto.core.keys.KeyUtil;
 
 /**
  * Created by kevinleperf on 26/06/15.

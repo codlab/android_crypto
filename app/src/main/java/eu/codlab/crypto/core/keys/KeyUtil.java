@@ -1,4 +1,4 @@
-package eu.codlab.crypto.core.keys.logic;
+package eu.codlab.crypto.core.keys;
 
 import java.security.KeyFactory;
 import java.security.KeyPair;

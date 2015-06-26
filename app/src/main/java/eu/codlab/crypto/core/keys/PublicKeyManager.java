@@ -3,7 +3,6 @@ package eu.codlab.crypto.core.keys;
 import java.security.PublicKey;
 
 import eu.codlab.crypto.core.stream.CypherRSA;
-import eu.codlab.crypto.core.keys.logic.KeyUtil;
 
 /**
  * Perform operations on values using a given public key
