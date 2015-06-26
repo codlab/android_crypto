@@ -16,8 +16,8 @@ gen/
 .gradle/
 build/
 
+#Android Studio
 *.idea
-
 
 # Local configuration file (sdk path, etc)
 local.properties
