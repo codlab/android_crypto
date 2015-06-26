@@ -1,4 +1,4 @@
-package eu.codlab.crypto.stream;
+package eu.codlab.crypto.core.stream;
 
 import android.annotation.SuppressLint;
 
@@ -11,8 +11,8 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import eu.codlab.crypto.utils.Base64Coder;
-import eu.codlab.crypto.utils.Constants;
+import eu.codlab.crypto.core.utils.Base64Coder;
+import eu.codlab.crypto.core.utils.Constants;
 
 public class CypherAES {
 

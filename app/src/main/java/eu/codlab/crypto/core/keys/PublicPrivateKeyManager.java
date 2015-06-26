@@ -1,10 +1,10 @@
-package eu.codlab.crypto.keys;
+package eu.codlab.crypto.core.keys;
 
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
-import eu.codlab.crypto.stream.CypherRSA;
-import eu.codlab.crypto.keys.logic.KeyUtil;
+import eu.codlab.crypto.core.keys.logic.KeyUtil;
+import eu.codlab.crypto.core.stream.CypherRSA;
 
 /**
  * Created by kevinleperf on 24/02/15.
@@ -26,7 +26,7 @@ public class PublicPrivateKeyManager {
         return new PublicPrivateKeyManager(key_size);
     }
 
-    private void generateKeys(){
+    private void generateKeys() {
         KeyUtil.generateKey(_key_size);
     }
 
@@ -68,7 +68,6 @@ public class PublicPrivateKeyManager {
     public byte[] decrypt(byte[] bytes) {
         return CypherRSA.decrypt(bytes, _public_key);
     }
-
 
 
 }

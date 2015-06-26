@@ -1,4 +1,4 @@
-package eu.codlab.crypto.keys.logic;
+package eu.codlab.crypto.core.keys.logic;
 
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -10,8 +10,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
-import eu.codlab.crypto.utils.Base64Coder;
-import eu.codlab.crypto.utils.Constants;
+import eu.codlab.crypto.core.utils.Constants;
 
 /**
  *

@@ -1,4 +1,4 @@
-package eu.codlab.crypto.utils;
+package eu.codlab.crypto.core.utils;
 
 /*
  * This software is provided 'as-is', without any express or implied

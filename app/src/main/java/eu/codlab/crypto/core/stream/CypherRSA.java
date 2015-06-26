@@ -1,4 +1,4 @@
-package eu.codlab.crypto.stream;
+package eu.codlab.crypto.core.stream;
 
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -7,7 +7,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 
-import eu.codlab.crypto.utils.Constants;
+import eu.codlab.crypto.core.utils.Constants;
 
 /**
  *

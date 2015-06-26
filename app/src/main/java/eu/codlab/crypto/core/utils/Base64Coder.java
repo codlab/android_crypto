@@ -1,4 +1,4 @@
-package eu.codlab.crypto.utils;
+package eu.codlab.crypto.core.utils;
 
 /**
  * Created by kevinleperf on 27/06/13.
