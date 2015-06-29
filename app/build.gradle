@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 21
-        versionCode 3
-        versionName "1.2"
+        versionCode Integer.parseInt(VERSION_CODE)
+        versionName VERSION_NAME
     }
     buildTypes {
         release {
@@ -23,3 +23,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'de.greenrobot:eventbus:3.0.0-beta1'
 }
+
+def homePath = gradle.gradleUserHomeDir.absolutePath
+apply from: homePath+'/upload.gradle'
