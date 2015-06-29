@@ -23,7 +23,7 @@ public class CypherAES {
     private Cipher dcipher;
 
     @SuppressLint("TrulyRandom")
-    CypherAES(String passPhrase, byte[] salt) throws Exception {
+    public CypherAES(String passPhrase, byte[] salt) throws Exception {
         SecretKeyFactory factory = SecretKeyFactory.getInstance(Constants.KEY_FACTORY_ALGORITHM);
         KeySpec spec = new PBEKeySpec(passPhrase.toCharArray(), salt, ITERATION_COUNT, KEY_LENGTH);
         SecretKey tmp = factory.generateSecret(spec);
