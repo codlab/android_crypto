@@ -9,6 +9,7 @@ import eu.codlab.crypto.core.stream.CypherRSA;
  * Created by kevinleperf on 24/02/15.
  */
 public class PublicPrivateKeyManager {
+    private CypherRSA _rsa;
     private int _key_size;
     private PublicKey _public_key;
     private PrivateKey _private_key;
@@ -19,6 +20,7 @@ public class PublicPrivateKeyManager {
 
     private PublicPrivateKeyManager(int key_size) {
         _key_size = key_size;
+        _rsa = new CypherRSA(_key_size);
     }
 
     public static PublicPrivateKeyManager createKeyManager(int key_size) {
@@ -27,6 +29,17 @@ public class PublicPrivateKeyManager {
 
     private void generateKeys() {
         KeyUtil.generateKey(_key_size);
+    }
+
+    public boolean setkeysFromStorage(PublicKey public_key, PrivateKey private_key) {
+        try {
+            _public_key = public_key;
+            _private_key = private_key;
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public boolean setKeysFromStorage(byte[] public_key, byte[] private_key) {
@@ -57,7 +70,7 @@ public class PublicPrivateKeyManager {
     }
 
     public byte[] encrypt(byte[] bytes) {
-        return CypherRSA.encrypt(bytes, _private_key);
+        return _rsa.encrypt(bytes, _private_key);
     }
 
     public byte[] decrypt(String text) {
@@ -65,7 +78,7 @@ public class PublicPrivateKeyManager {
     }
 
     public byte[] decrypt(byte[] bytes) {
-        return CypherRSA.decrypt(bytes, _public_key);
+        return _rsa.decrypt(bytes, _public_key);
     }
 
 

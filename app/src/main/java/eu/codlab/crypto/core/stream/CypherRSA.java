@@ -10,11 +10,21 @@ import javax.crypto.IllegalBlockSizeException;
 import eu.codlab.crypto.core.utils.Constants;
 
 /**
- *
  * Simple class to help encrypt / decrypt stream or string from RSA
  * Created by kevinleperf on 28/06/13.
  */
 public class CypherRSA {
+    private int _key_generated_size;
+
+    private CypherRSA() {
+
+    }
+
+    public CypherRSA(int key_generated_size) {
+        this();
+
+        _key_generated_size = key_generated_size;
+    }
 
     /**
      * Encrypt the given text using the private key
@@ -25,7 +35,7 @@ public class CypherRSA {
      * @param key
      * @return
      */
-    public static byte[] encrypt(byte[] bytes, PrivateKey key) {
+    public byte[] encrypt(byte[] bytes, PrivateKey key) {
         try {
             final Cipher cipher = Cipher.getInstance(Constants.ALGORITHM);
             cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -45,7 +55,7 @@ public class CypherRSA {
      * @param key
      * @return
      */
-    public static byte[] encrypt(String text, PrivateKey key) {
+    public byte[] encrypt(String text, PrivateKey key) {
         if (key != null && text != null) {
             return encrypt(text.getBytes(), key);
         }
@@ -60,7 +70,7 @@ public class CypherRSA {
      * @param key
      * @return
      */
-    public static byte[] encrypt(byte[] bytes, PublicKey key) {
+    public byte[] encrypt(byte[] bytes, PublicKey key) {
         try {
             final Cipher cipher = Cipher.getInstance(Constants.ALGORITHM);
             cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -79,7 +89,7 @@ public class CypherRSA {
      * @param key
      * @return
      */
-    public static byte[] encrypt(String text, PublicKey key) {
+    public byte[] encrypt(String text, PublicKey key) {
         if (key != null && text != null) {
             return encrypt(text.getBytes(), key);
         }
@@ -98,7 +108,7 @@ public class CypherRSA {
      * @param key
      * @return
      */
-    public static byte[] decrypt(byte[] text, PublicKey key) {
+    public byte[] decrypt(byte[] text, PublicKey key) {
         try {
             final Cipher cipher = Cipher.getInstance(Constants.ALGORITHM);
             cipher.init(Cipher.DECRYPT_MODE, key);
@@ -117,7 +127,7 @@ public class CypherRSA {
      * @param key
      * @return
      */
-    public static byte[] decrypt(byte[] text, PrivateKey key) {
+    public byte[] decrypt(byte[] text, PrivateKey key) {
         try {
             final Cipher cipher = Cipher.getInstance(Constants.ALGORITHM);
             cipher.init(Cipher.DECRYPT_MODE, key);
@@ -142,9 +152,14 @@ public class CypherRSA {
      * @param key
      * @return
      */
-    public static String decryptToString(byte[] text, PublicKey key) {
+    public String decryptToString(byte[] text, PublicKey key) {
         if (key != null && key != null) {
-            return new String(decrypt(text, key));
+            String result = new String(decrypt(text, key));
+            int nullCharIndex = result.indexOf((char) 0);
+            if (nullCharIndex >= 0) {
+                result = result.substring(0, nullCharIndex);
+            }
+            return result;
         }
         return null;
     }
@@ -157,14 +172,19 @@ public class CypherRSA {
      * @param key
      * @return
      */
-    public static String decryptToString(byte[] text, PrivateKey key) {
+    public String decryptToString(byte[] text, PrivateKey key) {
         if (key != null && key != null) {
-            return new String(decrypt(text, key));
+            String result = new String(decrypt(text, key));
+            int nullCharIndex = result.indexOf((char) 0);
+            if (nullCharIndex >= 0) {
+                result = result.substring(0, nullCharIndex);
+            }
+            return result;
         }
         return null;
     }
 
-    private static byte[] blockCipher(Cipher cipher, byte[] bytes, int mode) throws IllegalBlockSizeException, BadPaddingException {
+    private byte[] blockCipher(Cipher cipher, byte[] bytes, int mode) throws IllegalBlockSizeException, BadPaddingException {
         // string initialize 2 buffers.
         // scrambled will hold intermediate results
         byte[] scrambled = new byte[0];
@@ -172,7 +192,12 @@ public class CypherRSA {
         // toReturn will hold the total result
         byte[] toReturn = new byte[0];
         // if we encrypt we use 100 byte long blocks. Decryption requires 128 byte long blocks (because of RSA)
-        int length = (mode == Cipher.ENCRYPT_MODE) ? 200 : 256;
+        //int length = (mode == Cipher.ENCRYPT_MODE) ? 200 : 256;
+
+        int length = (mode == Cipher.ENCRYPT_MODE) ? 117 : 128;
+        System.out.println("length := " + length + " " + (_key_generated_size / 1024));
+        length *= (_key_generated_size / 1024);
+
 
         // another buffer. this one will hold the bytes that have to be modified in this step
         byte[] buffer = new byte[length];
@@ -209,7 +234,7 @@ public class CypherRSA {
         return toReturn;
     }
 
-    private static byte[] append(byte[] prefix, byte[] suffix) {
+    private byte[] append(byte[] prefix, byte[] suffix) {
         byte[] toReturn = new byte[prefix.length + suffix.length];
         for (int i = 0; i < prefix.length; i++) {
             toReturn[i] = prefix[i];

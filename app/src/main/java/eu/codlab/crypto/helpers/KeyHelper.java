@@ -3,6 +3,7 @@ package eu.codlab.crypto.helpers;
 import java.security.KeyPair;
 
 import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
 import eu.codlab.crypto.events.EventCreateKey;
 import eu.codlab.crypto.events.EventKeysGenerated;
 import eu.codlab.crypto.core.keys.KeyUtil;
@@ -26,6 +27,7 @@ public class KeyHelper {
         EventBus.getDefault().register(this);
     }
 
+    @Subscribe
     public void onEventAsync(EventCreateKey create_key) {
         KeyPair pair = KeyUtil.generateKey(create_key.getKeySize());
 

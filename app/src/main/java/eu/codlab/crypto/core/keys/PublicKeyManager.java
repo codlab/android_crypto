@@ -6,23 +6,30 @@ import eu.codlab.crypto.core.stream.CypherRSA;
 
 /**
  * Perform operations on values using a given public key
- *
+ * <p/>
  * Created by kevinleperf on 24/02/15.
  */
 public class PublicKeyManager {
     private int _key_size;
     private PublicKey _public_key;
+    private CypherRSA _rsa;
 
     private PublicKeyManager() {
     }
 
-    private PublicKeyManager(byte[] public_key) {
+    private PublicKeyManager(byte[] public_key, int key_size) {
         this();
         setKeysFromStorage(public_key);
+        _key_size = key_size;
+
+        _rsa = new CypherRSA(_key_size);
     }
 
-    private PublicKeyManager(PublicKey key){
+    private PublicKeyManager(PublicKey key, int key_size) {
         _public_key = key;
+        _key_size = key_size;
+
+        _rsa = new CypherRSA(_key_size);
     }
 
     /**
@@ -31,8 +38,9 @@ public class PublicKeyManager {
      * @param public_key
      * @return
      */
-    public static PublicKeyManager createKeyManager(PublicKey public_key){
-        return new PublicKeyManager(public_key);
+    public static PublicKeyManager createKeyManager(PublicKey public_key,
+                                                    int key_size) {
+        return new PublicKeyManager(public_key, key_size);
     }
 
     /**
@@ -42,8 +50,9 @@ public class PublicKeyManager {
      * @param public_key
      * @return
      */
-    public static PublicKeyManager createKeyManager(byte[] public_key) {
-        return new PublicKeyManager(public_key);
+    public static PublicKeyManager createKeyManager(byte[] public_key,
+                                                    int _key_size) {
+        return new PublicKeyManager(public_key, _key_size);
     }
 
     private boolean setKeysFromStorage(byte[] public_key) {
@@ -66,8 +75,9 @@ public class PublicKeyManager {
 
     /**
      * Encrypt the text using the public key
-     *
+     * <p/>
      * Example : using somebody's public ey, you encrypt a text he will then be able to decrypt
+     *
      * @param text
      * @return
      */
@@ -77,18 +87,19 @@ public class PublicKeyManager {
 
     /**
      * ENcrypt the given byte array using the public key
-     *
+     * <p/>
      * Example : using somebody's public ey, you encrypt a text he will then be able to decrypt
+     *
      * @param bytes
      * @return
      */
     public byte[] encrypt(byte[] bytes) {
-        return CypherRSA.encrypt(bytes, _public_key);
+        return _rsa.encrypt(bytes, _public_key);
     }
 
     /**
      * Decrypt the given byte array using the public key
-     *
+     * <p/>
      * Example : someone sent you a text AND a signature (encryption of the message hash)
      * you can check it is the owner by decrypting the signature and then compare the decrypting hash
      * with the hash inside the signature
@@ -97,7 +108,7 @@ public class PublicKeyManager {
      * @return
      */
     public byte[] decrypt(byte[] bytes) {
-        return CypherRSA.decrypt(bytes, _public_key);
+        return _rsa.decrypt(bytes, _public_key);
     }
 
 
